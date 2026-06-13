@@ -1,0 +1,73 @@
+specificationVersion: '0.1'
+id: eversign-rate-limits
+name: Eversign API Rate Limits
+description: >-
+  Rate limits and quota controls for the Eversign (Xodo Sign) REST API.
+  Limits are enforced monthly based on the subscribed plan. Document quotas
+  are distinct from API call quotas. No documented per-minute or burst
+  throttling is published; limits are quota-based at the monthly level.
+url: https://eversign.com/api/documentation
+limits:
+  - name: API Sandbox Document Quota
+    description: >-
+      Maximum number of production API documents allowed per month on the
+      free API Sandbox plan. Documents are watermarked and for testing only.
+    plan: API Sandbox
+    type: documents
+    quota: 2
+    period: month
+    overage: false
+  - name: API Light Document Quota
+    description: >-
+      Maximum number of production API documents allowed per month on the
+      API Light plan. Documents are legally binding with LTV enabled.
+    plan: API Light
+    type: documents
+    quota: 50
+    period: month
+    overage: true
+    overageUnit: document
+  - name: API Business Call Quota
+    description: >-
+      Maximum number of API calls allowed per month on higher-tier API
+      Business plans. Overage is charged per additional call beyond the
+      monthly quota.
+    plan: API Business
+    type: api-calls
+    quota: 10000
+    period: month
+    overage: true
+    overageCost: 0.10
+    overageUnit: call
+  - name: SMS Credits - API Light
+    description: >-
+      Monthly SMS authentication credits per user included in the API Light
+      plan, used for signer identity verification via SMS.
+    plan: API Light
+    type: sms-credits
+    quota: 20
+    period: month
+    overageUnit: user
+  - name: Template Limit - API Light
+    description: >-
+      Maximum number of reusable document templates permitted under the
+      API Light plan.
+    plan: API Light
+    type: templates
+    quota: 10
+    period: account
+  - name: User Limit - API Light
+    description: >-
+      Maximum number of user seats included in the API Light plan.
+    plan: API Light
+    type: users
+    quota: 5
+    period: account
+notes:
+  - No documented per-second or per-minute throttling limits are published
+    in the Eversign API documentation. Rate control is enforced via monthly
+    document and call quotas tied to the subscribed plan.
+  - Authentication uses a single API access key appended as an HTTP GET
+    parameter; each key is scoped to the account and business entity.
+  - Sandbox mode documents are non-binding and carry a test prefix in the
+    document title.

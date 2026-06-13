@@ -1,0 +1,76 @@
+aid: eversign
+name: Eversign
+description: >-
+  E-signature and document management platform with a REST API for creating,
+  sending, and managing electronic signature requests, templates, audit trails,
+  bulk sending, embedded signing, and webhook notifications. Now branded as
+  Xodo Sign, formerly eversign.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/eversign/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - E-Signature
+  - Electronic Signatures
+  - Document Management
+  - PDF
+  - Audit Trail
+  - Webhooks
+  - Bulk Sending
+apis:
+  - name: Eversign API
+    description: >-
+      RESTful JSON API for creating and sending documents for electronic
+      signature, managing templates, uploading files, tracking audit trails,
+      bulk sending via CSV, and receiving webhook event notifications for
+      document lifecycle events.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://eversign.com/api
+    baseURL: https://api.eversign.com
+    tags:
+      - E-Signature
+      - Documents
+      - Templates
+      - Webhooks
+      - Bulk Sending
+    properties:
+      - type: Documentation
+        url: https://eversign.com/api/documentation
+      - type: Authentication
+        url: https://eversign.com/api/documentation
+      - type: Webhooks
+        url: https://eversign.com/api/documentation/webhooksQuickly
+      - type: GitHubRepository
+        url: https://github.com/eversign/eversign-php-sdk
+      - type: GitHubRepository
+        url: https://github.com/eversign/eversign-node-sdk
+      - type: GitHubRepository
+        url: https://github.com/eversign/eversign-python-sdk
+common:
+  - type: Website
+    url: https://eversign.com
+  - type: Documentation
+    url: https://eversign.com/api/documentation
+  - type: GitHubOrg
+    url: https://github.com/eversign
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/xodosign
+  - type: Blog
+    url: https://eversign.com/blog
+  - type: Pricing
+    url: https://eversign.com/pricing
+  - type: StatusPage
+    url: https://eversign.com/status-page
+  - type: X
+    url: https://twitter.com/geteversign
+  - type: Plans
+    url: plans/eversign-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/eversign-rate-limits.yml
+  - type: FinOps
+    url: finops/eversign-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,115 @@
+specificationVersion: '0.1'
+id: eversign-plans-pricing
+name: Eversign Plans and Pricing
+description: >-
+  Pricing plans for Eversign (Xodo Sign) covering both eSignature plans and
+  API-specific plans. API plans are billed annually and include document
+  quotas, template limits, SMS credits, and dedicated support tiers.
+url: https://eversign.com/pricing
+plans:
+  - name: Basic
+    description: >-
+      Entry-level eSignature plan with unlimited documents, 3 templates per
+      user, LTV-enabled signatures, mobile app access, and app integrations
+      with basic support.
+    type: eSignature
+    url: https://eversign.com/pricing
+    price: 10.00
+    unit: month
+    billingCycle: yearly
+    features:
+      - Unlimited documents
+      - 3 templates per user
+      - LTV (Long Term Validation) enabled
+      - Mobile app access
+      - App integrations
+      - Basic support
+  - name: Professional
+    description: >-
+      Popular mid-tier eSignature plan with unlimited templates, bulk sending
+      credits, SMS credits, advanced PDF editing, AI summarizer, custom
+      branding, in-person signing, and premium support.
+    type: eSignature
+    url: https://eversign.com/pricing
+    price: 16.00
+    unit: month
+    billingCycle: yearly
+    features:
+      - Everything in Basic
+      - Unlimited templates
+      - 10 bulk sending credits per user
+      - 10 SMS credits per user
+      - Advanced PDF editing
+      - AI summarizer
+      - Custom branding
+      - In-person signing
+      - Premium support
+  - name: Enterprise
+    description: >-
+      Custom enterprise eSignature plan for large organizations with volume
+      templates, bulk document sending, volume SMS credits, additional seats,
+      and dedicated support.
+    type: eSignature
+    url: https://eversign.com/pricing
+    price: custom
+    unit: month
+    billingCycle: custom
+    features:
+      - Everything in Professional
+      - Volume templates
+      - Bulk document sending
+      - Volume SMS credits
+      - Additional seats
+      - Dedicated support
+  - name: API Sandbox
+    description: >-
+      Free API plan for developers to test the Eversign API. Allows up to 2
+      production API documents with watermarked output suitable for sandbox
+      testing only.
+    type: API
+    url: https://eversign.com/pricing
+    price: 0.00
+    unit: month
+    billingCycle: free
+    features:
+      - 2 production API documents
+      - Sandbox testing environment
+      - Watermarked documents
+  - name: API Light
+    description: >-
+      Entry-level paid API plan with 50 API documents per month, 10 templates,
+      LTV-enabled signatures, 20 SMS credits per user, up to 5 users, advanced
+      integrations, bulk document sending, dedicated support, and in-person
+      signing.
+    type: API
+    url: https://eversign.com/pricing
+    price: 50.00
+    unit: month
+    billingCycle: yearly
+    features:
+      - 50 API documents monthly
+      - 10 templates
+      - LTV (Long Term Validation) enabled
+      - 20 SMS credits per user
+      - 5 users
+      - Advanced integrations
+      - Bulk document sending
+      - Dedicated support
+      - In-person signing
+  - name: API Business
+    description: >-
+      Custom high-volume API plan for enterprises needing unlimited templates,
+      volume SMS credits, volume users, custom branding, and tailored API
+      solutions. Requires contacting Eversign for a custom quote.
+    type: API
+    url: https://eversign.com/pricing
+    price: custom
+    unit: month
+    billingCycle: custom
+    features:
+      - Everything in API Light
+      - Unlimited templates
+      - Volume SMS credits
+      - Volume users
+      - Custom branding
+      - Custom solutions

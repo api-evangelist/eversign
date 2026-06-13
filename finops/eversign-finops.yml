@@ -1,0 +1,106 @@
+specificationVersion: '1.0'
+id: eversign-finops
+name: Eversign FinOps Framework
+description: >-
+  FinOps Framework (FOCUS-aligned) cost analysis for the Eversign (Xodo Sign)
+  API. Covers cost drivers, unit economics, optimization strategies, and
+  budgeting guidance for teams integrating the eSignature API into
+  production workflows.
+url: https://eversign.com/pricing
+provider: Eversign (Xodo Sign)
+currency: USD
+billingCycle: yearly
+costDrivers:
+  - name: API Document Volume
+    description: >-
+      Primary cost driver for API plans. Each document sent via API counts
+      against the monthly quota. API Light includes 50 documents/month;
+      overages and additional volume require upgrading to API Business.
+    unit: document
+    plans:
+      - plan: API Sandbox
+        includedUnits: 2
+        unitCost: 0.00
+        overageCost: null
+      - plan: API Light
+        includedUnits: 50
+        unitCost: 1.00
+        overageCost: 1.50
+        note: Effective unit cost based on $50/month for 50 documents
+      - plan: API Business
+        includedUnits: custom
+        unitCost: custom
+        overageCost: custom
+  - name: API Call Volume
+    description: >-
+      Secondary cost driver on higher-tier plans. Business plan includes
+      10,000 API calls per month with $0.10 overage per additional call.
+    unit: api-call
+    plans:
+      - plan: API Business
+        includedUnits: 10000
+        unitCost: 0.00
+        overageCost: 0.10
+  - name: SMS Authentication Credits
+    description: >-
+      SMS credits are consumed per signer identity verification action.
+      API Light includes 20 credits per user per month. Additional credits
+      require upgrading or custom arrangement.
+    unit: sms-credit
+    plans:
+      - plan: API Light
+        includedUnits: 20
+        perUser: true
+        overageCost: custom
+  - name: User Seats
+    description: >-
+      The number of user seats included in the plan affects team collaboration
+      capabilities. API Light is capped at 5 users.
+    unit: user-seat
+    plans:
+      - plan: API Light
+        includedUnits: 5
+        overageCost: custom
+      - plan: API Business
+        includedUnits: custom
+        overageCost: custom
+optimization:
+  - name: Sandbox-First Development
+    description: >-
+      Use the free API Sandbox plan during development and testing. Sandbox
+      documents are non-binding and do not count against production quotas,
+      enabling cost-free integration testing.
+    category: waste-reduction
+  - name: Template Reuse
+    description: >-
+      Leverage templates to reduce document creation overhead and API calls.
+      Well-designed templates minimize per-document customization API
+      calls and improve throughput within monthly quotas.
+    category: efficiency
+  - name: Bulk Sending for Volume
+    description: >-
+      Use the bulk sending CSV feature for high-volume signature campaigns
+      rather than individual document API calls. This reduces per-document
+      processing overhead and keeps call counts efficient.
+    category: efficiency
+  - name: Monitor Monthly Quota Consumption
+    description: >-
+      Track monthly document and API call consumption against plan quotas
+      to avoid unexpected overage charges ($1.50/document, $0.10/call).
+      Implement alerting when consumption exceeds 80% of monthly quota.
+    category: cost-visibility
+  - name: Annual Billing Commitment
+    description: >-
+      All API plans are billed annually. Commit to yearly billing only after
+      validating production volume requirements in sandbox. Mismatched plan
+      tiers result in either unused quota waste or overage costs.
+    category: commitment-optimization
+budgeting:
+  minimumMonthly: 0.00
+  entryProductionMonthly: 50.00
+  enterpriseMonthly: custom
+  note: >-
+    API Light at $50/month (billed yearly at $600/year) is the entry point
+    for production API use. API Business pricing is custom and requires
+    direct negotiation with Eversign sales for high-volume workflows
+    exceeding 50 documents/month.
