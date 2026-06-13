@@ -1,0 +1,108 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "eversign": "https://eversign.com/api/documentation#",
+    "xodo": "https://xodosign.com/",
+    "aid": "https://api-evangelist.com/vocab/aid",
+    "baseURL": "https://api-evangelist.com/vocab/baseURL",
+    "humanURL": "https://api-evangelist.com/vocab/humanURL",
+    "accessKey": {
+      "@id": "eversign:access_key",
+      "@type": "@id"
+    },
+    "businessId": {
+      "@id": "eversign:business_id"
+    },
+    "sandbox": {
+      "@id": "eversign:sandbox"
+    },
+    "document": {
+      "@id": "eversign:document",
+      "@type": "@id"
+    },
+    "template": {
+      "@id": "eversign:template",
+      "@type": "@id"
+    },
+    "signer": {
+      "@id": "eversign:signer",
+      "@type": "@id"
+    },
+    "file": {
+      "@id": "eversign:file",
+      "@type": "@id"
+    },
+    "bulkSendJob": {
+      "@id": "eversign:bulk_send_job",
+      "@type": "@id"
+    },
+    "auditTrail": {
+      "@id": "eversign:audit_trail",
+      "@type": "@id"
+    },
+    "webhook": {
+      "@id": "eversign:webhook",
+      "@type": "@id"
+    },
+    "business": {
+      "@id": "eversign:business",
+      "@type": "@id"
+    },
+    "signatureField": {
+      "@id": "eversign:signature_field",
+      "@type": "@id"
+    },
+    "initialsField": {
+      "@id": "eversign:initials_field",
+      "@type": "@id"
+    },
+    "dateSignedField": {
+      "@id": "eversign:date_signed_field",
+      "@type": "@id"
+    },
+    "textField": {
+      "@id": "eversign:text_field",
+      "@type": "@id"
+    },
+    "checkboxField": {
+      "@id": "eversign:checkbox_field",
+      "@type": "@id"
+    },
+    "dropdownField": {
+      "@id": "eversign:dropdown_field",
+      "@type": "@id"
+    },
+    "radioField": {
+      "@id": "eversign:radio_field",
+      "@type": "@id"
+    },
+    "embeddedSigning": {
+      "@id": "eversign:embedded_signing"
+    },
+    "oauthToken": {
+      "@id": "eversign:oauth_token",
+      "@type": "@id"
+    }
+  },
+  "@type": "WebAPI",
+  "name": "Eversign API",
+  "alternateName": "Xodo Sign API",
+  "description": "RESTful JSON API for creating and sending documents for electronic signature, managing templates, uploading files, tracking audit trails, bulk sending via CSV, and receiving webhook event notifications for document lifecycle events.",
+  "url": "https://eversign.com/api",
+  "documentation": "https://eversign.com/api/documentation",
+  "provider": {
+    "@type": "Organization",
+    "name": "Eversign / Xodo Sign",
+    "url": "https://eversign.com",
+    "sameAs": [
+      "https://github.com/eversign",
+      "https://twitter.com/geteversign",
+      "https://www.linkedin.com/company/xodosign"
+    ]
+  },
+  "termsOfService": "https://eversign.com/terms-of-service",
+  "baseURL": {
+    "@id": "baseURL",
+    "@value": "https://api.eversign.com"
+  }
+}
