@@ -1,0 +1,933 @@
+"""
+Eversign (Xodo Sign) GraphQL Schema
+Derived from: https://eversign.com/api/documentation
+Provider: Eversign / Xodo Sign
+Description: E-signature and document management platform API schema
+"""
+
+# ─── Scalars ──────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar Upload
+
+# ─── Document Types ───────────────────────────────────────────────────────────
+
+"""Status of a document in the signing lifecycle."""
+enum DocumentStatus {
+  DRAFT
+  SENT
+  COMPLETED
+  CANCELLED
+  DECLINED
+  EXPIRED
+  PENDING
+}
+
+"""Title wrapper for a document."""
+type DocumentTitle {
+  """The plain-text title of the document."""
+  title: String!
+}
+
+"""Email message sent with a document."""
+type DocumentMessage {
+  """Subject line of the email."""
+  subject: String
+  """Body text of the email sent to signers."""
+  message: String
+}
+
+"""Core document entity."""
+type Document {
+  """Unique hash identifier for the document."""
+  documentHash: String!
+  """Human-readable title."""
+  title: String!
+  """Current status in the signing lifecycle."""
+  status: DocumentStatus!
+  """Whether the document is a draft."""
+  isDraft: Boolean!
+  """Whether the document requires in-order signing."""
+  inOrder: Boolean!
+  """Email message attached to this document."""
+  message: DocumentMessage
+  """Timestamp when the document was created."""
+  createdAt: DateTime!
+  """Timestamp when the document was last modified."""
+  updatedAt: DateTime
+  """Timestamp when the document expires, if set."""
+  expiresAt: DateTime
+  """Timestamp when the document was completed."""
+  completedAt: DateTime
+  """Timestamp when the document was cancelled."""
+  cancelledAt: DateTime
+  """List of signers on this document."""
+  signers: [Signer!]!
+  """List of CC recipients."""
+  recipients: [RecipientCC!]
+  """Files attached to this document."""
+  files: [File!]!
+  """Form fields placed on the document."""
+  fields: [FormField!]
+  """Reminder configuration."""
+  reminder: Reminder
+  """Expiry configuration."""
+  expiry: Expiry
+  """Business ID that owns this document."""
+  businessId: Int!
+  """Whether embedded signing is enabled."""
+  embedded: Boolean
+  """Embedded signing URL, if applicable."""
+  embeddedSigningURL: String
+  """Whether to use custom requester email."""
+  customRequesterName: String
+  """Custom requester email address."""
+  customRequesterEmail: String
+  """Whether the document is a template-based send."""
+  isTemplate: Boolean
+}
+
+"""Detailed view of a document with extended metadata."""
+type DocumentDetails {
+  """Unique hash identifier."""
+  documentHash: String!
+  """Human-readable title."""
+  title: String!
+  """Current status."""
+  status: DocumentStatus!
+  """Whether the document is a draft."""
+  isDraft: Boolean!
+  """Whether signing must proceed in order."""
+  inOrder: Boolean!
+  """Email message configuration."""
+  message: DocumentMessage
+  """Date/time of creation."""
+  createdAt: DateTime!
+  """Date/time of last update."""
+  updatedAt: DateTime
+  """Date/time of expiry."""
+  expiresAt: DateTime
+  """Date/time signing was completed."""
+  completedAt: DateTime
+  """Date/time of cancellation."""
+  cancelledAt: DateTime
+  """Full signer list with status details."""
+  signers: [SignerDetails!]!
+  """Full CC recipient list."""
+  recipients: [RecipientDetails!]
+  """All files associated with this document."""
+  files: [FileDetails!]!
+  """All form fields with captured values."""
+  fields: [FormFieldDetails!]
+  """Reminder settings."""
+  reminder: ReminderDetails
+  """Expiry settings."""
+  expiry: Expiry
+  """Audit trail for this document."""
+  auditTrail: AuditTrail
+  """Business ID owning the document."""
+  businessId: Int!
+  """Whether embedded signing is enabled."""
+  embedded: Boolean
+  """Embedded signing URL."""
+  embeddedSigningURL: String
+}
+
+# ─── Template Types ───────────────────────────────────────────────────────────
+
+"""Title wrapper for a template."""
+type TemplateTitle {
+  """The plain-text title of the template."""
+  title: String!
+}
+
+"""A reusable document template."""
+type Template {
+  """Unique hash identifier for the template."""
+  templateHash: String!
+  """Human-readable title."""
+  title: String!
+  """Optional description of the template."""
+  description: String
+  """Whether this template is shared with the team."""
+  shared: Boolean!
+  """Whether this template requires in-order signing."""
+  inOrder: Boolean!
+  """Roles defined in this template."""
+  roles: [SignerRole!]!
+  """Files associated with this template."""
+  files: [File!]!
+  """Form fields defined in this template."""
+  fields: [FormField!]
+  """Timestamp when the template was created."""
+  createdAt: DateTime!
+  """Timestamp when the template was last updated."""
+  updatedAt: DateTime
+  """Business ID owning this template."""
+  businessId: Int!
+}
+
+"""Full template details including all signers, fields, and metadata."""
+type TemplateDetails {
+  """Unique hash identifier."""
+  templateHash: String!
+  """Human-readable title."""
+  title: String!
+  """Description of the template purpose."""
+  description: String
+  """Whether shared with team."""
+  shared: Boolean!
+  """Whether signing must proceed in order."""
+  inOrder: Boolean!
+  """All signer roles defined in this template."""
+  roles: [SignerRole!]!
+  """All files with detailed metadata."""
+  files: [FileDetails!]!
+  """All form fields with full definitions."""
+  fields: [FormFieldDetails!]
+  """Email message configuration for template sends."""
+  message: DocumentMessage
+  """Reminder settings."""
+  reminder: Reminder
+  """Expiry settings."""
+  expiry: Expiry
+  """Date/time of creation."""
+  createdAt: DateTime!
+  """Date/time of last update."""
+  updatedAt: DateTime
+  """Business ID owning this template."""
+  businessId: Int!
+}
+
+# ─── Signer Types ─────────────────────────────────────────────────────────────
+
+"""Ordering configuration for sequential signing."""
+type SignerOrder {
+  """1-based position in the signing order."""
+  order: Int!
+  """Whether this signer must sign before the next proceeds."""
+  sequential: Boolean!
+}
+
+"""Custom message for a specific signer."""
+type SignerMessage {
+  """The signer's email address this message targets."""
+  email: String!
+  """Custom subject for the signer's invitation email."""
+  subject: String
+  """Custom body message for the signer's invitation email."""
+  message: String
+}
+
+"""A signer assigned to a document."""
+type Signer {
+  """1-based index identifying the signer."""
+  id: Int!
+  """Signer's full name."""
+  name: String!
+  """Signer's email address."""
+  email: String!
+  """Signing order position."""
+  order: Int
+  """Signing order configuration."""
+  signerOrder: SignerOrder
+  """Whether this signer has signed."""
+  signed: Boolean!
+  """Custom message for this signer."""
+  message: SignerMessage
+  """Whether embedded signing is enabled for this signer."""
+  embedded: Boolean
+  """Embedded signing URL for this signer."""
+  embeddedSigningURL: String
+  """Whether the signer must enter a PIN."""
+  requiresPIN: Boolean
+  """Phone number for SMS PIN delivery."""
+  pinSMSNumber: String
+  """Whether to send email to this signer."""
+  deliverEmail: Boolean
+}
+
+"""Extended signer info including signing status and timestamps."""
+type SignerDetails {
+  """1-based index identifying the signer."""
+  id: Int!
+  """Signer's full name."""
+  name: String!
+  """Signer's email address."""
+  email: String!
+  """Signing order position."""
+  order: Int
+  """Signing order configuration."""
+  signerOrder: SignerOrder
+  """Whether this signer has signed."""
+  signed: Boolean!
+  """Timestamp when the signer signed the document."""
+  signedAt: DateTime
+  """Timestamp when the document was last viewed by this signer."""
+  lastViewedAt: DateTime
+  """Custom message for this signer."""
+  message: SignerMessage
+  """Embedded signing URL if applicable."""
+  embeddedSigningURL: String
+  """IP address recorded at signing time."""
+  signerIP: String
+  """Browser agent string recorded at signing time."""
+  signerUserAgent: String
+  """Signatures captured by this signer."""
+  signatures: [SignatureDetails!]
+}
+
+"""A role placeholder in a template, filled when a document is created from the template."""
+type SignerRole {
+  """Role identifier used to map signers when using the template."""
+  role: String!
+  """Human-readable label for this role."""
+  label: String
+  """Whether this role must sign in a specific order."""
+  order: Int
+}
+
+# ─── Signature Types ──────────────────────────────────────────────────────────
+
+"""Date/time value for when a signature was captured."""
+type SignatureDate {
+  """ISO 8601 timestamp of the signature event."""
+  signedAt: DateTime!
+  """Timezone identifier."""
+  timezone: String
+}
+
+"""A captured signature record."""
+type Signature {
+  """Unique identifier for this signature."""
+  id: String!
+  """ID of the signer who produced this signature."""
+  signerId: Int!
+  """The type of signature (drawn, typed, uploaded)."""
+  signatureType: String!
+  """Date captured."""
+  signatureDate: SignatureDate!
+}
+
+"""Extended signature record with image data and metadata."""
+type SignatureDetails {
+  """Unique identifier."""
+  id: String!
+  """ID of the signer."""
+  signerId: Int!
+  """Type of signature (drawn, typed, uploaded)."""
+  signatureType: String!
+  """Date and time captured."""
+  signatureDate: SignatureDate!
+  """URL to the signature image."""
+  signatureImageURL: String
+  """Base64-encoded signature image."""
+  signatureImageBase64: String
+  """Width of the signature image in pixels."""
+  imageWidth: Int
+  """Height of the signature image in pixels."""
+  imageHeight: Int
+}
+
+# ─── Form Field Types ─────────────────────────────────────────────────────────
+
+"""Type of form field placed on a document."""
+enum FormFieldType {
+  SIGNATURE
+  INITIALS
+  DATE_SIGNED
+  TEXT
+  TEXT_MERGE
+  CHECKBOX
+  RADIO
+  DROPDOWN
+  ATTACHMENT
+  NOTE
+  PAYMENT
+}
+
+"""Value captured for a form field after signing."""
+type FormFieldValue {
+  """The identifier of the field this value belongs to."""
+  fieldIdentifier: String!
+  """The captured value (text, boolean string, selected option, etc.)."""
+  value: String
+}
+
+"""A form field placed on a document page."""
+type FormField {
+  """Unique identifier for the field."""
+  identifier: String!
+  """Type of field."""
+  fieldType: FormFieldType!
+  """1-based page number where this field appears."""
+  page: Int!
+  """X coordinate as a fraction of page width (0–1)."""
+  x: Float!
+  """Y coordinate as a fraction of page height (0–1)."""
+  y: Float!
+  """Width of the field as a fraction of page width."""
+  width: Float!
+  """Height of the field as a fraction of page height."""
+  height: Float!
+  """The signer ID this field is assigned to."""
+  signerId: Int
+  """Whether filling this field is required."""
+  required: Boolean
+  """Whether this field is read-only (prefilled)."""
+  readOnly: Boolean
+  """Prefilled value for the field."""
+  value: String
+  """Label shown above or beside the field."""
+  label: String
+  """Placeholder text inside the field."""
+  placeholder: String
+  """Font size for text fields."""
+  fontSize: Int
+  """Font family for text fields."""
+  fontFamily: String
+}
+
+"""Extended form field with captured value and validation info."""
+type FormFieldDetails {
+  """Unique identifier."""
+  identifier: String!
+  """Type of field."""
+  fieldType: FormFieldType!
+  """1-based page number."""
+  page: Int!
+  """X coordinate."""
+  x: Float!
+  """Y coordinate."""
+  y: Float!
+  """Width."""
+  width: Float!
+  """Height."""
+  height: Float!
+  """Signer ID this field is assigned to."""
+  signerId: Int
+  """Whether filling is required."""
+  required: Boolean
+  """Whether read-only."""
+  readOnly: Boolean
+  """Current or captured value."""
+  value: String
+  """Field label."""
+  label: String
+  """Placeholder text."""
+  placeholder: String
+  """Font size."""
+  fontSize: Int
+  """Font family."""
+  fontFamily: String
+  """Dropdown or radio options."""
+  options: [String!]
+  """Validation rule pattern."""
+  validationPattern: String
+  """Custom validation error message."""
+  validationMessage: String
+}
+
+# ─── Recipient Types ──────────────────────────────────────────────────────────
+
+"""Email address wrapper for a recipient."""
+type RecipientEmail {
+  """Email address."""
+  email: String!
+  """Display name."""
+  name: String
+}
+
+"""A recipient of a document (signer or observer)."""
+type Recipient {
+  """Recipient's full name."""
+  name: String!
+  """Recipient's email address."""
+  email: String!
+  """Role of this recipient."""
+  role: String
+}
+
+"""Extended recipient with delivery status."""
+type RecipientDetails {
+  """Recipient's full name."""
+  name: String!
+  """Recipient's email address."""
+  email: String!
+  """Role of this recipient."""
+  role: String
+  """Whether the email was delivered."""
+  delivered: Boolean
+  """Timestamp of email delivery."""
+  deliveredAt: DateTime
+  """Timestamp when the recipient last viewed the document."""
+  lastViewedAt: DateTime
+}
+
+"""A CC recipient who receives a copy but does not sign."""
+type RecipientCC {
+  """CC recipient's full name."""
+  name: String!
+  """CC recipient's email address."""
+  email: String!
+}
+
+# ─── File Types ───────────────────────────────────────────────────────────────
+
+"""A remote URL pointing to a file for Eversign to fetch."""
+type FileURL {
+  """The public URL where the file can be downloaded."""
+  url: String!
+  """Original filename."""
+  filename: String
+}
+
+"""Base64-encoded file content for inline upload."""
+type FileBase64 {
+  """Base64-encoded content of the file."""
+  content: String!
+  """Filename including extension (e.g., contract.pdf)."""
+  filename: String!
+  """MIME type of the file (e.g., application/pdf)."""
+  mimeType: String
+}
+
+"""A file associated with a document or template."""
+type File {
+  """Unique identifier for the file."""
+  fileId: String!
+  """Display name of the file."""
+  name: String!
+  """Number of pages in the document."""
+  pages: Int
+  """Whether this file was uploaded vs fetched from URL."""
+  uploaded: Boolean
+  """URL to download the original file."""
+  fileURL: String
+}
+
+"""Extended file metadata including dimensions."""
+type FileDetails {
+  """Unique identifier."""
+  fileId: String!
+  """Display name."""
+  name: String!
+  """Number of pages."""
+  pages: Int
+  """Whether uploaded."""
+  uploaded: Boolean
+  """Download URL."""
+  fileURL: String
+  """Width of each page in pixels."""
+  pageWidth: Int
+  """Height of each page in pixels."""
+  pageHeight: Int
+  """MIME type of the file."""
+  mimeType: String
+  """File size in bytes."""
+  fileSize: Int
+  """Timestamp when the file was uploaded."""
+  uploadedAt: DateTime
+}
+
+# ─── Audit Trail Types ────────────────────────────────────────────────────────
+
+"""Type of audit trail event."""
+enum AuditEntryType {
+  CREATED
+  SENT
+  VIEWED
+  SIGNED
+  DECLINED
+  CANCELLED
+  EXPIRED
+  REMINDER_SENT
+  BOUNCED
+  DOWNLOADED
+  AUTHENTICATION_FAILED
+  PIN_REQUESTED
+}
+
+"""A single event in a document's audit trail."""
+type AuditEntry {
+  """Type of event."""
+  event: AuditEntryType!
+  """Timestamp of the event."""
+  timestamp: DateTime!
+  """Email address of the actor, if applicable."""
+  actorEmail: String
+  """Name of the actor, if applicable."""
+  actorName: String
+  """IP address of the actor."""
+  ipAddress: String
+  """User agent string of the actor."""
+  userAgent: String
+  """Location string derived from IP."""
+  location: String
+  """Additional metadata for this event."""
+  metadata: JSON
+}
+
+"""Complete audit trail for a document."""
+type AuditTrail {
+  """Document hash this audit trail belongs to."""
+  documentHash: String!
+  """Ordered list of audit events."""
+  entries: [AuditEntry!]!
+  """Total number of events."""
+  totalEvents: Int!
+}
+
+# ─── Reminder and Expiry Types ────────────────────────────────────────────────
+
+"""Specific expiry date/time value."""
+type ExpiryDate {
+  """ISO 8601 expiry timestamp."""
+  expiresAt: DateTime!
+  """Whether the expiry is active."""
+  active: Boolean!
+}
+
+"""Expiry configuration for a document."""
+type Expiry {
+  """Number of days after sending that the document expires."""
+  days: Int
+  """Specific date on which the document expires."""
+  expiryDate: ExpiryDate
+  """Whether expiry is enabled."""
+  enabled: Boolean!
+}
+
+"""Reminder configuration for a document."""
+type Reminder {
+  """Number of days after sending to send the first reminder."""
+  days: Int!
+  """Whether reminders are enabled."""
+  enabled: Boolean!
+}
+
+"""Extended reminder info with frequency and last-sent timestamp."""
+type ReminderDetails {
+  """Days after sending for the first reminder."""
+  days: Int!
+  """Whether reminders are enabled."""
+  enabled: Boolean!
+  """How often (in days) to resend the reminder."""
+  repeat: Int
+  """Timestamp the last reminder was sent."""
+  lastSentAt: DateTime
+  """Total number of reminders sent."""
+  totalSent: Int
+}
+
+# ─── Business Types ───────────────────────────────────────────────────────────
+
+"""Physical address for a business account."""
+type BusinessAddress {
+  """Street address line 1."""
+  street1: String
+  """Street address line 2."""
+  street2: String
+  """City."""
+  city: String
+  """State or province."""
+  state: String
+  """Postal/ZIP code."""
+  postalCode: String
+  """Country code (ISO 3166-1 alpha-2)."""
+  country: String
+}
+
+"""Core business account entity."""
+type Business {
+  """Unique business ID."""
+  businessId: Int!
+  """Business display name."""
+  name: String!
+  """Primary contact email."""
+  email: String!
+  """Business address."""
+  address: BusinessAddress
+  """Current plan name."""
+  plan: String
+  """Business website URL."""
+  website: String
+}
+
+"""Extended business account with plan limits and usage stats."""
+type BusinessDetails {
+  """Unique business ID."""
+  businessId: Int!
+  """Business display name."""
+  name: String!
+  """Primary contact email."""
+  email: String!
+  """Business address."""
+  address: BusinessAddress
+  """Current plan name."""
+  plan: String
+  """Plan document limit per month."""
+  planDocumentLimit: Int
+  """Number of documents used this month."""
+  documentsUsedThisMonth: Int
+  """Number of team members."""
+  teamMemberCount: Int
+  """Business timezone."""
+  timezone: String
+  """Business logo URL."""
+  logoURL: String
+  """Business website URL."""
+  website: String
+  """Timestamp when the business was created."""
+  createdAt: DateTime!
+  """Timestamp of last update."""
+  updatedAt: DateTime
+}
+
+# ─── Team Member Types ────────────────────────────────────────────────────────
+
+"""Role of a team member within a business."""
+enum MemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+"""Extended team member info with permissions."""
+type MemberDetails {
+  """Unique user ID."""
+  userId: Int!
+  """Member's full name."""
+  name: String!
+  """Member's email address."""
+  email: String!
+  """Role in the team."""
+  role: MemberRole!
+  """Timestamp the member joined."""
+  joinedAt: DateTime
+  """Whether the member's account is active."""
+  active: Boolean!
+  """Whether the member can create documents."""
+  canCreateDocuments: Boolean
+  """Whether the member can manage templates."""
+  canManageTemplates: Boolean
+  """Whether the member can view all documents."""
+  canViewAllDocuments: Boolean
+}
+
+"""A member of a business team."""
+type TeamMember {
+  """Unique user ID."""
+  userId: Int!
+  """Member's full name."""
+  name: String!
+  """Member's email address."""
+  email: String!
+  """Role in the team."""
+  role: MemberRole!
+  """Whether the member's account is active."""
+  active: Boolean!
+}
+
+# ─── Auth Types ───────────────────────────────────────────────────────────────
+
+"""An API key credential for authenticating REST requests."""
+type APIKey {
+  """The API key string."""
+  accessKey: String!
+  """Descriptive label for this key."""
+  label: String
+  """Timestamp when the key was created."""
+  createdAt: DateTime!
+  """Whether the key is currently active."""
+  active: Boolean!
+  """Business ID this key belongs to."""
+  businessId: Int!
+}
+
+"""An OAuth application registered with Eversign."""
+type OAuthApp {
+  """OAuth client ID."""
+  clientId: String!
+  """OAuth client secret (only shown at creation)."""
+  clientSecret: String
+  """Application display name."""
+  name: String!
+  """Redirect URI registered for this app."""
+  redirectURI: String!
+  """Scopes granted to this application."""
+  scopes: [String!]
+  """Timestamp when the app was registered."""
+  createdAt: DateTime!
+}
+
+"""An OAuth access and refresh token pair."""
+type Token {
+  """Bearer access token."""
+  accessToken: String!
+  """Token type (always Bearer)."""
+  tokenType: String!
+  """Seconds until the access token expires."""
+  expiresIn: Int!
+  """Refresh token for obtaining a new access token."""
+  refreshToken: String
+  """Scopes granted by this token."""
+  scope: String
+  """Business ID this token is associated with."""
+  businessId: Int
+}
+
+# ─── Webhook Types ────────────────────────────────────────────────────────────
+
+"""A registered webhook endpoint."""
+type Webhook {
+  """Unique identifier for the webhook."""
+  webhookId: String!
+  """URL that receives webhook POST requests."""
+  url: String!
+  """Whether the webhook is currently active."""
+  active: Boolean!
+  """Business ID this webhook is registered for."""
+  businessId: Int!
+  """Event types this webhook subscribes to."""
+  events: [String!]!
+  """Timestamp when the webhook was registered."""
+  createdAt: DateTime!
+}
+
+"""A webhook event payload delivered to a registered endpoint."""
+type WebhookEvent {
+  """Type of event (e.g., document_signed, document_completed)."""
+  event: String!
+  """Timestamp of the event."""
+  timestamp: DateTime!
+  """Document hash the event relates to."""
+  documentHash: String
+  """Signer ID if the event relates to a specific signer."""
+  signerId: Int
+  """Full document object at the time of the event."""
+  document: Document
+  """Raw event metadata."""
+  meta: JSON
+}
+
+# ─── Error Types ──────────────────────────────────────────────────────────────
+
+"""A field-level validation error."""
+type ValidationError {
+  """JSON path to the invalid field."""
+  field: String!
+  """Human-readable description of the validation failure."""
+  message: String!
+  """The rejected value."""
+  rejectedValue: JSON
+}
+
+"""General API error response."""
+type Error {
+  """HTTP status code."""
+  code: Int!
+  """Machine-readable error type."""
+  type: String!
+  """Human-readable error description."""
+  message: String!
+  """Field-level validation errors, if applicable."""
+  validationErrors: [ValidationError!]
+}
+
+# ─── Query Root ───────────────────────────────────────────────────────────────
+
+type Query {
+  """Retrieve a document by its hash ID."""
+  document(documentHash: String!, businessId: Int!): DocumentDetails
+
+  """List documents for a business, optionally filtered by status."""
+  documents(businessId: Int!, status: DocumentStatus, limit: Int, offset: Int): [Document!]!
+
+  """Retrieve a template by its hash ID."""
+  template(templateHash: String!, businessId: Int!): TemplateDetails
+
+  """List all templates for a business."""
+  templates(businessId: Int!): [Template!]!
+
+  """Retrieve the audit trail for a document."""
+  auditTrail(documentHash: String!, businessId: Int!): AuditTrail
+
+  """Retrieve business details."""
+  business(businessId: Int!): BusinessDetails
+
+  """List team members for a business."""
+  teamMembers(businessId: Int!): [TeamMember!]!
+
+  """List API keys for a business."""
+  apiKeys(businessId: Int!): [APIKey!]!
+
+  """List registered webhooks for a business."""
+  webhooks(businessId: Int!): [Webhook!]!
+}
+
+# ─── Mutation Root ────────────────────────────────────────────────────────────
+
+"""Input for creating or sending a document."""
+input DocumentInput {
+  """Document title."""
+  title: String!
+  """Business ID."""
+  businessId: Int!
+  """Whether to save as draft."""
+  isDraft: Boolean
+  """Whether signing must proceed in order."""
+  inOrder: Boolean
+  """Sandbox mode (documents not legally binding)."""
+  sandbox: Boolean
+  """Custom email message."""
+  message: String
+  """Custom email subject."""
+  subject: String
+  """Reminder settings."""
+  reminderDays: Int
+  """Number of days until expiry."""
+  expiryDays: Int
+}
+
+"""Input for creating a signer."""
+input SignerInput {
+  """Signer's full name."""
+  name: String!
+  """Signer's email address."""
+  email: String!
+  """Signing order position."""
+  order: Int
+  """Whether embedded signing is required."""
+  embedded: Boolean
+  """Custom message for this signer."""
+  message: String
+}
+
+type Mutation {
+  """Create a new document (draft or send immediately)."""
+  createDocument(input: DocumentInput!, signers: [SignerInput!]!, fileIds: [String!]!): Document
+
+  """Send a previously drafted document."""
+  sendDocument(documentHash: String!, businessId: Int!): Document
+
+  """Cancel a sent document."""
+  cancelDocument(documentHash: String!, businessId: Int!): Document
+
+  """Delete a draft document."""
+  deleteDocument(documentHash: String!, businessId: Int!): Boolean
+
+  """Send a reminder to pending signers."""
+  sendReminder(documentHash: String!, businessId: Int!): Boolean
+
+  """Download the final signed document PDF."""
+  downloadDocument(documentHash: String!, businessId: Int!): FileBase64
+
+  """Register a new webhook endpoint."""
+  createWebhook(url: String!, businessId: Int!, events: [String!]!): Webhook
+
+  """Delete a registered webhook."""
+  deleteWebhook(webhookId: String!, businessId: Int!): Boolean
+}
