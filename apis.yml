@@ -5,7 +5,7 @@ description: E-signature and document management platform with a REST API for cr
   sending, embedded signing, and webhook notifications. Now branded as Xodo Sign,
   formerly eversign.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/eversign/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -23,7 +23,7 @@ apis:
   description: RESTful JSON API for creating and sending documents for electronic
     signature, managing templates, uploading files, tracking audit trails, bulk sending
     via CSV, and receiving webhook event notifications for document lifecycle events.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://eversign.com/api
   baseURL: https://api.eversign.com
   tags:
