@@ -1,18 +1,14 @@
 {
-  "url": "https://eversign.com/blog",
-  "rss": null,
-  "note": "No RSS/Atom feed discovered; blog is paginated HTML at https://eversign.com/blog (23+ pages as of 2026-06-13). The provider is now branded as Xodo Sign.",
-  "last_checked": "2026-06-13",
   "repo": "eversign",
   "feeds": [
     {
-      "source": "https://www.linkedin.com/company/xodosign",
-      "feed_url": "https://www.linkedin.com/company/xodosign",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "source": "https://eversign.com/blog",
+      "feed_url": "",
+      "saved": 1,
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 3,
+  "fetched": "2026-06-27T12:40:47Z",
+  "agent_pulled": "2026-06-27"
 }
