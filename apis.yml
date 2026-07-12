@@ -48,6 +48,8 @@ apis:
   - url: graphql/eversign-graphql.md
     type: GraphQL
 common:
+- type: DomainSecurity
+  url: security/eversign-domain-security.yml
 - type: Website
   url: https://eversign.com
 - type: Documentation
