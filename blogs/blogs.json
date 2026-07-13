@@ -2,13 +2,11 @@
   "repo": "eversign",
   "feeds": [
     {
-      "source": "https://eversign.com/blog",
-      "feed_url": "",
-      "saved": 1,
-      "method": "agent-scrape"
+      "source": "https://www.linkedin.com/company/xodosign",
+      "error": "HTTPError"
     }
   ],
-  "post_count": 3,
-  "fetched": "2026-06-27T12:40:47Z",
-  "agent_pulled": "2026-06-27"
+  "post_count": 6,
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }
