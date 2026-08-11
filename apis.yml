@@ -60,6 +60,15 @@ apis:
   - url: graphql/eversign-graphql.md
     type: GraphQL
 common:
+- type: IssueTracker
+  url: https://github.com/eversign/eversign-php-sdk/issues
+- type: Releases
+  url: https://github.com/eversign/eversign-php-sdk/releases
+- type: CodeOfConduct
+  url: https://github.com/eversign/eversign-php-sdk/blob/master/CODE_OF_CONDUCT.md
+- type: License
+  name: MIT
+  url: https://github.com/eversign/eversign-php-sdk/blob/master/LICENSE
 - type: DomainSecurity
   url: security/eversign-domain-security.yml
 - type: Website
