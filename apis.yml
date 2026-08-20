@@ -25,6 +25,14 @@ specificationVersion: '0.23'
 tags:
 - E-Signature
 - Electronic Signatures
+- Document-Management
+- PDF
+- Audit Trail
+- Webhook
+- Bulk Sending
+tags_raw:
+- E-Signature
+- Electronic Signatures
 - Document Management
 - PDF
 - Audit Trail
@@ -39,6 +47,12 @@ apis:
   humanURL: https://eversign.com/api
   baseURL: https://api.eversign.com
   tags:
+  - E-Signature
+  - Documents
+  - Templates
+  - Webhook
+  - Bulk Sending
+  tags_raw:
   - E-Signature
   - Documents
   - Templates
