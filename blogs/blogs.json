@@ -3,10 +3,13 @@
   "feeds": [
     {
       "source": "https://www.linkedin.com/company/xodosign",
-      "error": "HTTPError"
+      "feed_url": "https://www.linkedin.com/company/xodosign",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 6,
-  "fetched": "2026-08-15T12:22:01Z",
+  "fetched": "2026-08-22T20:20:02Z",
   "agent_pulled": "2026-07-04"
 }
