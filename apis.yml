@@ -38,7 +38,7 @@ specificationVersion: '0.23'
 tags:
 - E-Signature
 - Electronic Signature
-- Document-Management
+- Document Management
 - PDF
 - Audit Trail
 - Webhook
@@ -51,6 +51,7 @@ tags_raw:
 - Audit Trail
 - Webhooks
 - Bulk Sending
+- Document-Management
 apis:
 - name: Eversign API
   description: RESTful JSON API for creating and sending documents for electronic
@@ -84,8 +85,6 @@ apis:
     url: https://github.com/eversign/eversign-node-sdk
   - type: GitHubRepository
     url: https://github.com/eversign/eversign-python-sdk
-  - url: graphql/eversign-graphql.md
-    type: GraphQL
 common:
 - type: IssueTracker
   url: https://github.com/eversign/eversign-php-sdk/issues
