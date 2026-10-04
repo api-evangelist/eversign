@@ -1,36 +1,34 @@
-# Kin Score artifact — eversign — 2026-08-24T171257
+# Kin Score artifact — eversign — 2026-10-03T000835
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: eversign
-  schema_version: 0.13.0
-  scored_at: '2026-08-24'
-  run_ts: 2026-08-24T171257
-  composite: 40.6
-  band: developing
+  schema_version: 0.23.0
+  scored_at: '2026-10-03'
+  run_ts: 2026-10-03T000835
+  composite: 32.8
+  band: thin
   facets:
-    discoverability: 68.5
-    contract_quality: 50.0
-    governance: 0.0
-    operational_transparency: 68.4
-    developer_ergonomics: 11.9
-    commercial_clarity: 50.0
+    discoverability: 66.1
+    contract_quality: 10.4
     contract_governance: 0.0
-    access_clarity: 50.0
+    operational_transparency: 65.3
+    developer_ergonomics: 23.8
+    access_clarity: 46.8
   agent_readiness:
-    score: 15.5
+    score: 8.9
     band: agent-aware
     dimensions:
-      spec_presence: true
+      spec_presence: false
       agentic_access: false
       reversibility_documented: false
       mcp_server: false
-      auth_clarity: false
+      auth_clarity: bearer
       idempotency: false
       error_semantics: false
       openapi_examples: false
       rate_limit_signal: documented
-      event_surface_described: false
+      event_surface_described: unknown
       agent_skills: false
       well_known_catalog: false
       consent_identity: false
@@ -40,3 +38,12 @@ kin_score:
       protected_resource_metadata: false
       dynamic_client_registration: false
       agentic_commerce: false
+  regulatory:
+    applies: true
+    regime: Horizontal (data, software, accessibility, platform)
+    regime_id: horizontal
+    score: 16.7
+    matched_via: fallback
+  open_source:
+    applies: true
+    score: 40.0
