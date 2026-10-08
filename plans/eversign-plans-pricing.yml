@@ -117,3 +117,55 @@ plans:
       - Volume users
       - Custom branding
       - Custom solutions
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units:
+  - period
+  plans:
+  - name: Basic
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Professional
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Enterprise
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: API Sandbox
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: API Light
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: API Business
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - period
+    periods: []
