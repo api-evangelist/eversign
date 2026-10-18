@@ -37,7 +37,6 @@ modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
 - E-Signature
-- Electronic Signature
 - Document Management
 - PDF
 - Audit Trail
@@ -52,6 +51,7 @@ tags_raw:
 - Webhooks
 - Bulk Sending
 - Document-Management
+- Electronic Signature
 apis:
 - name: Eversign API
   description: RESTful JSON API for creating and sending documents for electronic
